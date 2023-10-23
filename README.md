@@ -20,7 +20,7 @@ The MDSi XML Utility is a Python program that allows you to merge multiple XML f
 7.	If you are using Windows, the output folder will open in File Explorer automatically.
 ## About
 This tool was created by Nikola Hadzic. The current version is 3.0.
-For any questions or issues, please contact the author at [email@example.com].
+For any questions or issues, please contact the author at [bibilionyt@gmail.com].
 
 ## System Requirements
 •	Python 3.x
