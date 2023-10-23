@@ -1,3 +1,5 @@
+![usblogo](https://github.com/hadzicni/MDSi-Tool-UHBS/assets/142234835/69d8fd47-1979-45af-abd4-5ad6700ee781)
+
 # MDSi XML Utility
 
 ## Overview
@@ -31,9 +33,3 @@ For any questions or issues, please contact the author at bibilionyt@gmail.com.
 # License
 This software is released under the MIT License.
 Note: This README is intended to provide an overview of the program and its usage. For detailed technical information, please refer to the source code.
-
-
-
-
-
-![usblogo](https://github.com/hadzicni/MDSi-Tool-UHBS/assets/142234835/69d8fd47-1979-45af-abd4-5ad6700ee781)
