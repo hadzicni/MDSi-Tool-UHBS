@@ -1,4 +1,4 @@
-<img src="usblogo.png" width="400" height="88">
+<img src="usblogo.png" width="400" height="86">
 
 # MDSi XML Utility
 
