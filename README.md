@@ -1,4 +1,4 @@
-MDSi XML Utility
+*** MDSi XML Utility
 Overview
 The MDSi XML Utility is a Python program that allows you to merge multiple XML files into a single XML file. It is particularly useful for combining XML data into a specified format with customizable options. This utility comes with a user-friendly graphical user interface (GUI) built using the Tkinter library, making it easy to use.
 Features
