@@ -1,4 +1,4 @@
-![usblogo](https://github.com/hadzicni/MDSi-Tool-UHBS/assets/142234835/69d8fd47-1979-45af-abd4-5ad6700ee781)
+<img src="usblogo.png" width="300" height="200">
 
 # MDSi XML Utility
 
