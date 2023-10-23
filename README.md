@@ -20,6 +20,7 @@ The MDSi XML Utility is a Python program that allows you to merge multiple XML f
 5.	Click the "XML-Dateien zusammenführen" button to start the merging process.
 6.	A confirmation message will be displayed, and the merged XML file will be saved in the selected output folder.
 7.	If you are using Windows, the output folder will open in File Explorer automatically.
+5. Run the program by executing the following command:
 
    ```bash
    python qr_code_generator.py
