@@ -133,7 +133,9 @@ if os.path.exists(logo_path):
     logo = ImageTk.PhotoImage(logo)
 
 logo_label = tk.Label(root, image=logo)
-logo_label.pack(pady=60)
+logo_label.pack(pady=60,
+                # anchor="nw"
+                )
 
 user_name = get_username()
 welcome_label = tk.Label(root, text=f"Hallo, {user_name}!", font=("Raleway-Bold", 14))
