@@ -31,8 +31,11 @@ For any questions or issues, please contact the author at nikola.hadzic@usb.ch.
 
 ## System Requirements
 •	Python 3.x
+
 •	Tkinter (usually included with Python installations)
+
 •	PIL (Python Imaging Library)
+
 •	An operating system with the ability to open the file explorer (for automatic folder opening)
 
 # License
