@@ -8,8 +8,12 @@ from PIL import Image, ImageTk
 from time import strftime
 import subprocess
 
-
 Button = tk.Button
+
+
+def close_window(_event):
+    root.destroy()
+    exit()
 
 
 def merge_xml_files(folder_path, output_file, ips_choice):
@@ -27,7 +31,7 @@ def merge_xml_files(folder_path, output_file, ips_choice):
                 start_index = xml_data.find(start_tag)
                 end_index = xml_data.rfind(end_tag)
                 if start_index != -1 and end_index != -1:
-                    data_to_append = xml_data[start_index : end_index + len(end_tag)]
+                    data_to_append = xml_data[start_index: end_index + len(end_tag)]
                     merged_data.append(data_to_append.strip())
 
     current_time = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -110,6 +114,7 @@ def auto_fill_filename():
 def update_filename(*args):
     auto_fill_filename()
 
+
 def get_username():
     try:
         username = os.getlogin()
@@ -164,7 +169,7 @@ browse_button = tk.Button(
     folder_frame,
     text="Auswählen",
     command=browse_button_clicked,
-    font=("Raleway"),
+    font="Raleway",
     width=20,
 )
 browse_button.pack(pady=5)
@@ -191,7 +196,7 @@ select_output_folder_button = tk.Button(
     output_frame,
     text="Auswählen",
     command=select_output_folder,
-    font=("Raleway"),
+    font="Raleway",
     width=20,
 )
 select_output_folder_button.pack(pady=5)
@@ -234,7 +239,7 @@ merge_button = Button(
     root,
     text="XML-Dateien zusammenführen",
     command=merge_button_clicked,
-    font=("Raleway"),
+    font="Raleway",
     width=25,
 )
 merge_button.pack(pady=25)
@@ -251,6 +256,7 @@ def show_about_window():
     )
     about_label.pack()
 
+
 about_button = tk.Button(root, text="About", command=show_about_window)
 about_button.pack(side="bottom", anchor="se", pady=30)
 about_button.place(x=605, y=765)
@@ -259,5 +265,7 @@ result_label = tk.Label(root, text="")
 result_label.pack()
 
 ips_choice.trace("w", update_filename)
+
+root.bind('<Escape>', close_window)
 
 root.mainloop()
