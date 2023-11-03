@@ -1,3 +1,4 @@
+
 import os
 import tkinter as tk
 from tkinter import PhotoImage
@@ -9,7 +10,6 @@ from time import strftime
 import subprocess
 
 Button = tk.Button
-
 
 def close_window(_event):
     root.destroy()
@@ -266,6 +266,6 @@ result_label.pack()
 
 ips_choice.trace("w", update_filename)
 
-root.bind('<Escape>', close_window)
+root.bind("<Escape>", close_window)
 
 root.mainloop()
