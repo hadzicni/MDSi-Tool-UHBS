@@ -1,11 +1,8 @@
 import os
 import tkinter as tk
-from tkinter import PhotoImage
 from tkinter import filedialog
-from xml.etree import ElementTree as ET
 from datetime import datetime
 from PIL import Image, ImageTk
-from time import strftime
 import subprocess
 
 Button = tk.Button
@@ -109,6 +106,8 @@ def auto_fill_filename():
         output_filename_entry.insert(0, "combined_data_IMC4K3")
     elif ips_choice_value == "Manually":
         output_filename_entry.insert(0, "combined_data_manually")
+    else:
+        output_filename_entry.insert(0, "combined_data")
 
 
 def update_filename(*args):
@@ -121,9 +120,6 @@ def get_username():
         return username
     except OSError:
         return "Unbekannter Benutzer"
-
-
-print(os.environ["username"])
 
 root = tk.Tk()
 root.title("MDSi XML Utility")
@@ -143,7 +139,7 @@ logo_label.pack(pady=60,
                 )
 
 user_name = get_username()
-welcome_label = tk.Label(root, text=f"Hallo, {user_name}!", font=("Raleway-Bold", 14))
+welcome_label = tk.Label(root, text=f"{user_name}", font=("Raleway-Bold", 14))
 welcome_label.pack()
 
 title_label = tk.Label(root, text="MDSi XML Utility", font=("Raleway", 18, "bold"))
@@ -240,7 +236,7 @@ merge_button = Button(
     text="XML-Dateien zusammenführen",
     command=merge_button_clicked,
     font="Raleway",
-    width=25,
+    width=50,
 )
 merge_button.pack(pady=25)
 
@@ -252,7 +248,7 @@ def show_about_window():
     about_window.geometry("250x150")
 
     about_label = tk.Label(
-        about_window, text=f"Autor: Nikola Hadzic\nVersion: 3.0\nHallo, {user_name}!"
+        about_window, text=f"Autor: Hadzic Nikola\nVersion: 3.0\nClient: Petitat Manuel"
     )
     about_label.pack()
 
