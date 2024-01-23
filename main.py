@@ -1,4 +1,4 @@
-
+import time
 import os
 import tkinter as tk
 from tkinter import filedialog
@@ -8,12 +8,13 @@ import subprocess
 
 Button = tk.Button
 
+
 def close_window(_event):
     root.destroy()
     exit()
 
 
-def merge_xml_files(folder_path, output_file, ips_choice):
+def merge_xml_files(folder_path, output_file, msi_choice):
     merged_data = []
 
     xml_file_count = 0
@@ -37,11 +38,11 @@ def merge_xml_files(folder_path, output_file, ips_choice):
         merged_file.write('<?xml version="1.0" encoding="utf-8"?>\n')
         merged_file.write("<MDSi>\n")
         merged_file.write("    <Header>\n")
-        if ips_choice == "IPS 4K2":
+        if msi_choice == "IPS 4K2":
             merged_file.write("        <IPSID>4K2</IPSID>\n")
-        elif ips_choice == "IMC 4K3":
+        elif msi_choice == "IMC 4K3":
             merged_file.write("        <IPSID>4K3</IPSID>\n")
-        elif ips_choice == "Manually":
+        elif msi_choice == "Manually":
             merged_file.write("        <IPSID></IPSID>\n")
         merged_file.write(f"        <ExpDate>{current_time}</ExpDate>\n")
         merged_file.write(f"        <RowCount>{xml_file_count}</RowCount>\n")
@@ -101,11 +102,11 @@ def auto_fill_filename():
     output_filename_entry.delete(0, tk.END)
     ips_choice_value = ips_choice.get()
     if ips_choice_value == "IPS 4K2":
-        output_filename_entry.insert(0, "combined_data_IPS4K2")
+        output_filename_entry.insert(0, "MDSi_Monat")
     elif ips_choice_value == "IMC 4K3":
-        output_filename_entry.insert(0, "combined_data_IMC4K3")
+        output_filename_entry.insert(0, "MDSimc_Monat")
     elif ips_choice_value == "Manually":
-        output_filename_entry.insert(0, "combined_data_manually")
+        output_filename_entry.insert(0, "manually")
     else:
         output_filename_entry.insert(0, "combined_data")
 
@@ -121,38 +122,38 @@ def get_username():
     except OSError:
         return "Unbekannter Benutzer"
 
+
 root = tk.Tk()
 root.title("MDSi XML Utility")
 root.resizable(width=False, height=False)
 root.geometry("660x800")
 app_font = ("Raleway", 12)
+root.configure(bg='#9B233C')
 
-logo_path = "usblogo.png"
+logo = None
+logo_path = "uhbs_logo_65_neg.png"
 if os.path.exists(logo_path):
     logo = Image.open(logo_path)
-    logo = logo.resize((400, 83))
+    logo = logo.resize((350, 60))
     logo = ImageTk.PhotoImage(logo)
 
-logo_label = tk.Label(root, image=logo)
-logo_label.pack(pady=60,
-                # anchor="nw"
-                )
+logo_label = tk.Label(root, image=logo, bg='#9B233C')
+logo_label.pack(pady=50)
 
 user_name = get_username()
-welcome_label = tk.Label(root, text=f"{user_name}", font=("Raleway-Bold", 14))
+welcome_label = tk.Label(root, text=f"{user_name}", font=("Raleway-Bold", 14), bg='#9B233C', fg='#E4C6C5')
 welcome_label.pack()
 
-title_label = tk.Label(root, text="MDSi XML Utility", font=("Raleway", 18, "bold"))
+title_label = tk.Label(root, text="MDSi XML Utility", font=("Raleway", 18, "bold"), bg='#9B233C', fg='#B35861')
 title_label.pack(pady=15)
 
-input_frame = tk.Frame(root)
+input_frame = tk.Frame(root, bg='#9B233C')
 input_frame.pack(pady=10)
 
-folder_frame = tk.Frame(input_frame)
+folder_frame = tk.Frame(input_frame, bg='#9B233C')
 folder_frame.pack(side=tk.LEFT, padx=20)
 
-instruction_label = tk.Label(folder_frame, text="Ordner mit den XML-Dateien:")
-instruction_label.configure(font="Raleway 11 bold")
+instruction_label = tk.Label(folder_frame, text="Ordner mit den XML-Dateien:", font="Raleway 11 bold", bg='#9B233C', fg='white')
 instruction_label.pack()
 
 ips_choice = tk.StringVar()
@@ -167,21 +168,21 @@ browse_button = tk.Button(
     command=browse_button_clicked,
     font="Raleway",
     width=20,
+    bg='#9B233C',
+    fg='white'
 )
 browse_button.pack(pady=5)
 
-output_frame = tk.Frame(input_frame)
+output_frame = tk.Frame(input_frame, bg='#9B233C')
 output_frame.pack(side=tk.LEFT, padx=20)
 
-output_folder_label = tk.Label(output_frame, text="Zielverzeichnis:")
-output_folder_label.configure(font="Raleway 11 bold")
+output_folder_label = tk.Label(output_frame, text="Zielverzeichnis:", font="Raleway 11 bold", bg='#9B233C', fg='white')
 output_folder_label.pack()
 
 output_folder_entry = tk.Entry(output_frame, width=40)
 output_folder_entry.pack(pady=5)
 
-output_filename_label = tk.Label(root, text="Dateiname:")
-output_filename_label.configure(font="Raleway 15 bold")
+output_filename_label = tk.Label(root, text="Dateiname:", font="Raleway 15 bold", bg='#9B233C', fg='white')
 output_filename_label.pack(pady=10)
 
 output_filename_entry = tk.Entry(root, width=50)
@@ -194,16 +195,19 @@ select_output_folder_button = tk.Button(
     command=select_output_folder,
     font="Raleway",
     width=20,
+    bg='#9B233C',
+    fg='white'
 )
 select_output_folder_button.pack(pady=5)
 
 ips_choice = tk.StringVar()
 ips_choice.set("IPS 4K2")
 
-ips_radio_frame = tk.Frame(root)
+ips_radio_frame = tk.Frame(root, bg='#9B233C')
 ips_radio_frame.pack(pady=10)
 
-ips_label = tk.Label(ips_radio_frame, text="IPS-Auswahl:", font=("Raleway", 14, "bold"))
+ips_label = tk.Label(ips_radio_frame, text="IPS-Auswahl:", font=("Raleway", 14, "bold"), bg='#9B233C', fg='white')
+ips_label.pack()
 
 ips_radio_font = ("Helvetica", 16)
 ips_radio_1 = tk.Radiobutton(
@@ -212,6 +216,8 @@ ips_radio_1 = tk.Radiobutton(
     variable=ips_choice,
     value="IPS 4K2",
     font=ips_radio_font,
+    bg='#9B233C',
+    fg='white'
 )
 ips_radio_2 = tk.Radiobutton(
     ips_radio_frame,
@@ -219,6 +225,8 @@ ips_radio_2 = tk.Radiobutton(
     variable=ips_choice,
     value="IMC 4K3",
     font=ips_radio_font,
+    bg='#9B233C',
+    fg='white'
 )
 ips_radio_3 = tk.Radiobutton(
     ips_radio_frame,
@@ -226,6 +234,8 @@ ips_radio_3 = tk.Radiobutton(
     variable=ips_choice,
     value="Manually",
     font=ips_radio_font,
+    bg='#9B233C',
+    fg='white'
 )
 ips_radio_1.pack()
 ips_radio_2.pack()
@@ -237,13 +247,15 @@ merge_button = Button(
     command=merge_button_clicked,
     font="Raleway",
     width=50,
+    bg='#9B233C',
+    fg='white'
 )
 merge_button.pack(pady=25)
 
 
 def show_about_window():
     about_window = tk.Toplevel(root)
-    about_window.title("About Tool")
+    about_window.title("About")
     about_window.resizable(width=False, height=False)
     about_window.geometry("250x150")
 
@@ -253,11 +265,11 @@ def show_about_window():
     about_label.pack()
 
 
-about_button = tk.Button(root, text="About", command=show_about_window)
+about_button = tk.Button(root, text="About", command=show_about_window, bg='#9B233C', fg='white')
 about_button.pack(side="bottom", anchor="se", pady=30)
 about_button.place(x=605, y=765)
 
-result_label = tk.Label(root, text="")
+result_label = tk.Label(root, text="", bg='#9B233C', fg='white')
 result_label.pack()
 
 ips_choice.trace("w", update_filename)
