@@ -217,7 +217,14 @@ ips_radio_1 = tk.Radiobutton(
     value="IPS 4K2",
     font=ips_radio_font,
     bg='#9B233C',
-    fg='white'
+    fg='white',
+    selectcolor='#9B233C',
+    activeforeground='white',
+    activebackground='#9B233C',
+    indicatoron=0,
+    borderwidth=4,
+    highlightthickness=0,
+    relief="flat"
 )
 ips_radio_2 = tk.Radiobutton(
     ips_radio_frame,
@@ -226,7 +233,14 @@ ips_radio_2 = tk.Radiobutton(
     value="IMC 4K3",
     font=ips_radio_font,
     bg='#9B233C',
-    fg='white'
+    fg='white',
+    selectcolor='#9B233C',
+    activeforeground='white',
+    activebackground='#9B233C',
+    indicatoron=0,
+    borderwidth=4,
+    highlightthickness=0,
+    relief="flat"
 )
 ips_radio_3 = tk.Radiobutton(
     ips_radio_frame,
@@ -235,11 +249,18 @@ ips_radio_3 = tk.Radiobutton(
     value="Manually",
     font=ips_radio_font,
     bg='#9B233C',
-    fg='white'
+    fg='white',
+    selectcolor='#9B233C',
+    activeforeground='white',
+    activebackground='#9B233C',
+    indicatoron=0,
+    borderwidth=4,
+    highlightthickness=0,
+    relief="flat"
 )
-ips_radio_1.pack()
-ips_radio_2.pack()
-ips_radio_3.pack()
+ips_radio_1.pack(side="left", padx=10)
+ips_radio_2.pack(side="left", padx=20)
+ips_radio_3.pack(side="left", padx=10)
 
 merge_button = Button(
     root,
