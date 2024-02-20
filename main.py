@@ -1,4 +1,3 @@
-import time
 import os
 import tkinter as tk
 from tkinter import filedialog
@@ -127,7 +126,7 @@ root = tk.Tk()
 root.title("MDSi XML Utility")
 root.resizable(width=False, height=False)
 root.geometry("660x800")
-app_font = ("Raleway", 12)
+app_font = ("Archivo", 16)
 root.configure(bg='#9B233C')
 
 logo = None
@@ -141,10 +140,10 @@ logo_label = tk.Label(root, image=logo, bg='#9B233C')
 logo_label.pack(pady=50)
 
 user_name = get_username()
-welcome_label = tk.Label(root, text=f"{user_name}", font=("Raleway-Bold", 14), bg='#9B233C', fg='#E4C6C5')
+welcome_label = tk.Label(root, text=f"{user_name}", font=("Archivo", 14), bg='#9B233C', fg='#E4C6C5')
 welcome_label.pack()
 
-title_label = tk.Label(root, text="MDSi XML Utility", font=("Raleway", 18, "bold"), bg='#9B233C', fg='#B35861')
+title_label = tk.Label(root, text="MDSi XML Utility", font=("Archivo", 26), bg='#9B233C', fg='#E4C6C5')
 title_label.pack(pady=15)
 
 input_frame = tk.Frame(root, bg='#9B233C')
@@ -153,7 +152,7 @@ input_frame.pack(pady=10)
 folder_frame = tk.Frame(input_frame, bg='#9B233C')
 folder_frame.pack(side=tk.LEFT, padx=20)
 
-instruction_label = tk.Label(folder_frame, text="Ordner mit den XML-Dateien:", font="Raleway 11 bold", bg='#9B233C', fg='white')
+instruction_label = tk.Label(folder_frame, text="Ordner mit den XML-Dateien:", font="Archivo 11 bold", bg='#9B233C', fg='white')
 instruction_label.pack()
 
 ips_choice = tk.StringVar()
@@ -166,7 +165,7 @@ browse_button = tk.Button(
     folder_frame,
     text="Auswählen",
     command=browse_button_clicked,
-    font="Raleway",
+    font="Archivo",
     width=20,
     bg='#9B233C',
     fg='white'
@@ -176,13 +175,13 @@ browse_button.pack(pady=5)
 output_frame = tk.Frame(input_frame, bg='#9B233C')
 output_frame.pack(side=tk.LEFT, padx=20)
 
-output_folder_label = tk.Label(output_frame, text="Zielverzeichnis:", font="Raleway 11 bold", bg='#9B233C', fg='white')
+output_folder_label = tk.Label(output_frame, text="Zielverzeichnis:", font="Archivo 11 bold", bg='#9B233C', fg='white')
 output_folder_label.pack()
 
 output_folder_entry = tk.Entry(output_frame, width=40)
 output_folder_entry.pack(pady=5)
 
-output_filename_label = tk.Label(root, text="Dateiname:", font="Raleway 15 bold", bg='#9B233C', fg='white')
+output_filename_label = tk.Label(root, text="Dateiname:", font="Archivo 15 bold", bg='#9B233C', fg='white')
 output_filename_label.pack(pady=10)
 
 output_filename_entry = tk.Entry(root, width=50)
@@ -193,7 +192,7 @@ select_output_folder_button = tk.Button(
     output_frame,
     text="Auswählen",
     command=select_output_folder,
-    font="Raleway",
+    font="Archivo",
     width=20,
     bg='#9B233C',
     fg='white'
@@ -206,10 +205,11 @@ ips_choice.set("IPS 4K2")
 ips_radio_frame = tk.Frame(root, bg='#9B233C')
 ips_radio_frame.pack(pady=10)
 
-ips_label = tk.Label(ips_radio_frame, text="IPS-Auswahl:", font=("Raleway", 14, "bold"), bg='#9B233C', fg='white')
+ips_label = tk.Label(ips_radio_frame, text="IPS-Auswahl:", font=("Archivo", 14, "bold"), bg='#9B233C', fg='white')
 ips_label.pack()
 
-ips_radio_font = ("Helvetica", 16)
+ips_radio_font = ("Archivo", 16)
+
 ips_radio_1 = tk.Radiobutton(
     ips_radio_frame,
     text="IPS (4K2)",
@@ -245,7 +245,7 @@ merge_button = Button(
     root,
     text="XML-Dateien zusammenführen",
     command=merge_button_clicked,
-    font="Raleway",
+    font="Archivo",
     width=50,
     bg='#9B233C',
     fg='white'
@@ -274,6 +274,7 @@ result_label.pack()
 
 ips_choice.trace("w", update_filename)
 
+root.bind("<Control-,>", merge_button_clicked)
 root.bind("<Escape>", close_window)
 
 root.mainloop()
