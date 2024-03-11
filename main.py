@@ -269,7 +269,11 @@ merge_button = Button(
     font="Archivo",
     width=50,
     bg='#9B233C',
-    fg='white'
+    fg='white',
+    activeforeground='white',
+    activebackground='#9B233C',
+    borderwidth=4,
+    highlightthickness=0,
 )
 merge_button.pack(pady=25)
 
