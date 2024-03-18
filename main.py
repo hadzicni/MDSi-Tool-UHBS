@@ -1,16 +1,18 @@
 import os
 import tkinter as tk
+from tkinter import ttk
 from tkinter import filedialog
 from datetime import datetime
 from PIL import Image, ImageTk
 import subprocess
+import webbrowser
 
 Button = tk.Button
-
 
 def close_window(_event):
     root.destroy()
     exit()
+
 
 
 def merge_xml_files(folder_path, output_file, msi_choice):
@@ -52,6 +54,9 @@ def merge_xml_files(folder_path, output_file, msi_choice):
 
     return merged_data
 
+def callback():
+        webbrowser.open_new(r"https://github.com/hadzicni/MDSi-Tool-UHBS")
+
 
 def select_output_folder():
     output_folder = filedialog.askdirectory()
@@ -71,13 +76,13 @@ def merge_button_clicked():
     ]
 
     if not xml_files:
-        result_label.config(text="Der ausgewählte Ordner enthält keine XML-Dateien.")
+        result_label.config(text="The selected folder does not contain any XML files.")
     elif not folder_path or not output_folder:
-        result_label.config(text="Bitte wählen Sie Quell- und Zielverzeichnis aus.")
+        result_label.config(text="Please select the source and target directory.")
     else:
         merged_data = merge_xml_files(folder_path, output_file, ips_choice.get())
         result_label.config(
-            text=f"XML-Dateien wurden zusammengeführt und als {output_file} gespeichert."
+            text=f"XML files were merged and saved as {output_file}."
         )
 
         if os.name == "nt":
@@ -97,17 +102,24 @@ def browse_button_clicked():
     folder_path_entry.insert(0, folder_path)
 
 
-def auto_fill_filename():
+def auto_fill_filename(*args):
     output_filename_entry.delete(0, tk.END)
     ips_choice_value = ips_choice.get()
+    selected_month = dropdownlist.get()
+    if selected_month not in ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]:
+        selected_month = "Monat"
+
     if ips_choice_value == "IPS 4K2":
-        output_filename_entry.insert(0, "MDSi_Monat")
+        filename_prefix = "MDSi"
     elif ips_choice_value == "IMC 4K3":
-        output_filename_entry.insert(0, "MDSimc_Monat")
+        filename_prefix = "MDSimc"
     elif ips_choice_value == "Manually":
-        output_filename_entry.insert(0, "manually")
+        filename_prefix = "manually"
     else:
-        output_filename_entry.insert(0, "combined_data")
+        filename_prefix = "combined_data"
+
+    output_filename_entry.insert(0, f"{filename_prefix}_{selected_month}")
+
 
 
 def update_filename(*args):
@@ -119,15 +131,19 @@ def get_username():
         username = os.getlogin()
         return username
     except OSError:
-        return "Unbekannter Benutzer"
-
+        return "Unknown user"
 
 root = tk.Tk()
 root.title("MDSi XML Utility")
 root.resizable(width=False, height=False)
-root.geometry("660x800")
+root.geometry("660x900")
 app_font = ("Archivo", 16)
 root.configure(bg='#9B233C')
+
+dropdownlist = ttk.Combobox(root, state="readonly", values=["Please select month", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"], width=20)
+dropdownlist.set("Please select month")
+dropdownlist.pack()
+dropdownlist.place(x=260, y=520)
 
 logo = None
 logo_path = "uhbs_logo_65_neg.png"
@@ -152,7 +168,7 @@ input_frame.pack(pady=10)
 folder_frame = tk.Frame(input_frame, bg='#9B233C')
 folder_frame.pack(side=tk.LEFT, padx=20)
 
-instruction_label = tk.Label(folder_frame, text="Ordner mit den XML-Dateien:", font="Archivo 11 bold", bg='#9B233C', fg='white')
+instruction_label = tk.Label(folder_frame, text="Folder with the XML files:", font="Archivo 11 bold", bg='#9B233C', fg='white')
 instruction_label.pack()
 
 ips_choice = tk.StringVar()
@@ -163,7 +179,7 @@ folder_path_entry.pack(pady=5)
 
 browse_button = tk.Button(
     folder_frame,
-    text="Auswählen",
+    text="Select",
     command=browse_button_clicked,
     font="Archivo",
     width=20,
@@ -175,13 +191,13 @@ browse_button.pack(pady=5)
 output_frame = tk.Frame(input_frame, bg='#9B233C')
 output_frame.pack(side=tk.LEFT, padx=20)
 
-output_folder_label = tk.Label(output_frame, text="Zielverzeichnis:", font="Archivo 11 bold", bg='#9B233C', fg='white')
+output_folder_label = tk.Label(output_frame, text="Target directory:", font="Archivo 11 bold", bg='#9B233C', fg='white')
 output_folder_label.pack()
 
 output_folder_entry = tk.Entry(output_frame, width=40)
 output_folder_entry.pack(pady=5)
 
-output_filename_label = tk.Label(root, text="Dateiname:", font="Archivo 15 bold", bg='#9B233C', fg='white')
+output_filename_label = tk.Label(root, text="File name:", font="Archivo 15 bold", bg='#9B233C', fg='white')
 output_filename_label.pack(pady=10)
 
 output_filename_entry = tk.Entry(root, width=50)
@@ -190,7 +206,7 @@ auto_fill_filename()
 
 select_output_folder_button = tk.Button(
     output_frame,
-    text="Auswählen",
+    text="Select",
     command=select_output_folder,
     font="Archivo",
     width=20,
@@ -203,9 +219,9 @@ ips_choice = tk.StringVar()
 ips_choice.set("IPS 4K2")
 
 ips_radio_frame = tk.Frame(root, bg='#9B233C')
-ips_radio_frame.pack(pady=10)
+ips_radio_frame.pack(pady=60)
 
-ips_label = tk.Label(ips_radio_frame, text="IPS-Auswahl:", font=("Archivo", 14, "bold"), bg='#9B233C', fg='white')
+ips_label = tk.Label(ips_radio_frame, text="IPS selection:", font=("Archivo", 14, "bold"), bg='#9B233C', fg='white')
 ips_label.pack()
 
 ips_radio_font = ("Archivo", 16)
@@ -264,7 +280,7 @@ ips_radio_3.pack(side="left", padx=10)
 
 merge_button = Button(
     root,
-    text="XML-Dateien zusammenführen",
+    text="Merge XML files",
     command=merge_button_clicked,
     font="Archivo",
     width=50,
@@ -277,6 +293,8 @@ merge_button = Button(
 )
 merge_button.pack(pady=25)
 
+link = Button(root, text="GitHub Repository", command=callback, bg='#9B233C', fg='white', font="Archivo")
+link.pack(padx=10, pady=10)
 
 def show_about_window():
     about_window = tk.Toplevel(root)
@@ -285,19 +303,20 @@ def show_about_window():
     about_window.geometry("250x150")
 
     about_label = tk.Label(
-        about_window, text=f"Autor: Hadzic Nikola\nVersion: 3.0\nClient: Petitat Manuel"
+        about_window, text=f"Author: Hadzic Nikola\nVersion: 3.8\nClient: Petitat Manuel"
     )
     about_label.pack()
 
 
-about_button = tk.Button(root, text="About", command=show_about_window, bg='#9B233C', fg='white')
-about_button.pack(side="bottom", anchor="se", pady=30)
-about_button.place(x=605, y=765)
+about_button = tk.Button(root, text="About", command=show_about_window, bg='#9B233C', fg='white', font="Archivo")
+about_button.pack(side="bottom", anchor="se", pady=0)
+about_button.place(x=590, y=845)
 
 result_label = tk.Label(root, text="", bg='#9B233C', fg='white')
 result_label.pack()
 
-ips_choice.trace("w", update_filename)
+ips_choice.trace("w", auto_fill_filename)
+dropdownlist.bind("<<ComboboxSelected>>", auto_fill_filename)
 
 root.bind("<Control-,>", merge_button_clicked)
 root.bind("<Escape>", close_window)
