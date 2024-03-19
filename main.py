@@ -1,7 +1,7 @@
 import os
 import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog
+from tkinterdnd2 import DND_FILES, TkinterDnD
+from tkinter import ttk, filedialog
 from datetime import datetime
 from PIL import Image, ImageTk
 import subprocess
@@ -9,11 +9,29 @@ import webbrowser
 
 Button = tk.Button
 
+root = TkinterDnD.Tk()
+root.title("MDSi XML Utility")
+root.resizable(width=False, height=False)
+root.geometry("660x900")
+app_font = ("Archivo", 16)
+root.configure(bg="#9B233C")
+
 def close_window(_event):
     root.destroy()
     exit()
 
-
+def on_drop(event):
+    # Extrahiere den Pfad der abgelegten Datei/Ordner
+    dropped_files = root.tk.splitlist(event.data)
+    if dropped_files:
+        dropped_path = dropped_files[0]
+        if os.path.isdir(dropped_path):
+            # Wenn ein Ordner abgelegt wurde, setze diesen als Quellpfad
+            folder_path_entry.delete(0, tk.END)
+            folder_path_entry.insert(0, dropped_path)
+        elif os.path.isfile(dropped_path):
+            # Hier kannst du entscheiden, was passieren soll, wenn Dateien abgelegt werden
+            print(f"File dropped: {dropped_path}")
 
 def merge_xml_files(folder_path, output_file, msi_choice):
     merged_data = []
@@ -30,7 +48,7 @@ def merge_xml_files(folder_path, output_file, msi_choice):
                 start_index = xml_data.find(start_tag)
                 end_index = xml_data.rfind(end_tag)
                 if start_index != -1 and end_index != -1:
-                    data_to_append = xml_data[start_index: end_index + len(end_tag)]
+                    data_to_append = xml_data[start_index : end_index + len(end_tag)]
                     merged_data.append(data_to_append.strip())
 
     current_time = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -54,8 +72,9 @@ def merge_xml_files(folder_path, output_file, msi_choice):
 
     return merged_data
 
-def callback():
-        webbrowser.open_new(r"https://github.com/hadzicni/MDSi-Tool-UHBS")
+
+def open_github_repository():
+    webbrowser.open_new(r"https://github.com/hadzicni/MDSi-Tool-UHBS")
 
 
 def select_output_folder():
@@ -81,9 +100,7 @@ def merge_button_clicked():
         result_label.config(text="Please select the source and target directory.")
     else:
         merged_data = merge_xml_files(folder_path, output_file, ips_choice.get())
-        result_label.config(
-            text=f"XML files were merged and saved as {output_file}."
-        )
+        result_label.config(text=f"XML files were merged and saved as {output_file}.")
 
         if os.name == "nt":
             subprocess.Popen(["explorer", output_folder])
@@ -106,7 +123,20 @@ def auto_fill_filename(*args):
     output_filename_entry.delete(0, tk.END)
     ips_choice_value = ips_choice.get()
     selected_month = dropdownlist.get()
-    if selected_month not in ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]:
+    if selected_month not in [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+    ]:
         selected_month = "Monat"
 
     if ips_choice_value == "IPS 4K2":
@@ -121,7 +151,6 @@ def auto_fill_filename(*args):
     output_filename_entry.insert(0, f"{filename_prefix}_{selected_month}")
 
 
-
 def update_filename(*args):
     auto_fill_filename()
 
@@ -133,14 +162,55 @@ def get_username():
     except OSError:
         return "Unknown user"
 
-root = tk.Tk()
-root.title("MDSi XML Utility")
-root.resizable(width=False, height=False)
-root.geometry("660x900")
-app_font = ("Archivo", 16)
-root.configure(bg='#9B233C')
+def show_about_window():
+    about_window = tk.Toplevel(root)
+    about_window.title("About")
+    about_window.resizable(width=False, height=False)
+    about_window.geometry("300x300")
 
-dropdownlist = ttk.Combobox(root, state="readonly", values=["Please select month", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"], width=20)
+    github_link_button = Button(
+        about_window,
+        text="GitHub Repository",
+        command=open_github_repository,
+        font="Archivo"
+    )
+    github_link_button.pack(padx=10, pady=10)
+
+    about_label = tk.Label(
+        about_window,
+        text=f"Universitätsspital Basel\nAuthor: Hadzic Nikola\nVersion: 3.8\nClient: Petitat Manuel\n\n© 2024 Nikola Hadzic", font=("Archivo", 10)
+    )
+    about_label.pack()
+
+    contact_button = tk.Button(
+        about_window,
+        text="Contact: nikola.hadzic@usb.ch",
+        command=lambda: webbrowser.open('mailto:nikola.hadzic@usb.ch'),
+        font=("Archivo", 10)
+    )
+    contact_button.pack(padx=5, pady=10)
+    
+
+dropdownlist = ttk.Combobox(
+    root,
+    state="readonly",
+    values=[
+        "Please select month",
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+    ],
+    width=20,
+)
 dropdownlist.set("Please select month")
 dropdownlist.pack()
 dropdownlist.place(x=260, y=520)
@@ -152,23 +222,33 @@ if os.path.exists(logo_path):
     logo = logo.resize((350, 60))
     logo = ImageTk.PhotoImage(logo)
 
-logo_label = tk.Label(root, image=logo, bg='#9B233C')
+logo_label = tk.Label(root, image=logo, bg="#9B233C")
 logo_label.pack(pady=50)
 
 user_name = get_username()
-welcome_label = tk.Label(root, text=f"{user_name}", font=("Archivo", 14), bg='#9B233C', fg='#E4C6C5')
+welcome_label = tk.Label(
+    root, text=f"Welcome, {user_name}", font=("Archivo", 14), bg="#9B233C", fg="#E4C6C5"
+)
 welcome_label.pack()
 
-title_label = tk.Label(root, text="MDSi XML Utility", font=("Archivo", 26), bg='#9B233C', fg='#E4C6C5')
+title_label = tk.Label(
+    root, text="MDSi XML Utility", font=("Archivo", 26), bg="#9B233C", fg="#E4C6C5"
+)
 title_label.pack(pady=15)
 
-input_frame = tk.Frame(root, bg='#9B233C')
+input_frame = tk.Frame(root, bg="#9B233C")
 input_frame.pack(pady=10)
 
-folder_frame = tk.Frame(input_frame, bg='#9B233C')
+folder_frame = tk.Frame(input_frame, bg="#9B233C")
 folder_frame.pack(side=tk.LEFT, padx=20)
 
-instruction_label = tk.Label(folder_frame, text="Folder with the XML files:", font="Archivo 11 bold", bg='#9B233C', fg='white')
+instruction_label = tk.Label(
+    folder_frame,
+    text="Folder with the XML files:",
+    font="Archivo 11 bold",
+    bg="#9B233C",
+    fg="white",
+)
 instruction_label.pack()
 
 ips_choice = tk.StringVar()
@@ -183,21 +263,29 @@ browse_button = tk.Button(
     command=browse_button_clicked,
     font="Archivo",
     width=20,
-    bg='#9B233C',
-    fg='white'
+    bg="#9B233C",
+    fg="white",
 )
 browse_button.pack(pady=5)
 
-output_frame = tk.Frame(input_frame, bg='#9B233C')
+output_frame = tk.Frame(input_frame, bg="#9B233C")
 output_frame.pack(side=tk.LEFT, padx=20)
 
-output_folder_label = tk.Label(output_frame, text="Target directory:", font="Archivo 11 bold", bg='#9B233C', fg='white')
+output_folder_label = tk.Label(
+    output_frame,
+    text="Target directory:",
+    font="Archivo 11 bold",
+    bg="#9B233C",
+    fg="white",
+)
 output_folder_label.pack()
 
 output_folder_entry = tk.Entry(output_frame, width=40)
 output_folder_entry.pack(pady=5)
 
-output_filename_label = tk.Label(root, text="File name:", font="Archivo 15 bold", bg='#9B233C', fg='white')
+output_filename_label = tk.Label(
+    root, text="File name:", font="Archivo 15 bold", bg="#9B233C", fg="white"
+)
 output_filename_label.pack(pady=10)
 
 output_filename_entry = tk.Entry(root, width=50)
@@ -210,18 +298,24 @@ select_output_folder_button = tk.Button(
     command=select_output_folder,
     font="Archivo",
     width=20,
-    bg='#9B233C',
-    fg='white'
+    bg="#9B233C",
+    fg="white",
 )
 select_output_folder_button.pack(pady=5)
 
 ips_choice = tk.StringVar()
 ips_choice.set("IPS 4K2")
 
-ips_radio_frame = tk.Frame(root, bg='#9B233C')
+ips_radio_frame = tk.Frame(root, bg="#9B233C")
 ips_radio_frame.pack(pady=60)
 
-ips_label = tk.Label(ips_radio_frame, text="IPS selection:", font=("Archivo", 14, "bold"), bg='#9B233C', fg='white')
+ips_label = tk.Label(
+    ips_radio_frame,
+    text="IPS selection:",
+    font=("Archivo", 14, "bold"),
+    bg="#9B233C",
+    fg="white",
+)
 ips_label.pack()
 
 ips_radio_font = ("Archivo", 16)
@@ -232,15 +326,15 @@ ips_radio_1 = tk.Radiobutton(
     variable=ips_choice,
     value="IPS 4K2",
     font=ips_radio_font,
-    bg='#9B233C',
-    fg='white',
-    selectcolor='#9B233C',
-    activeforeground='white',
-    activebackground='#9B233C',
+    bg="#9B233C",
+    fg="white",
+    selectcolor="#9B233C",
+    activeforeground="white",
+    activebackground="#9B233C",
     indicatoron=0,
     borderwidth=4,
     highlightthickness=0,
-    relief="flat"
+    relief="flat",
 )
 ips_radio_2 = tk.Radiobutton(
     ips_radio_frame,
@@ -248,15 +342,15 @@ ips_radio_2 = tk.Radiobutton(
     variable=ips_choice,
     value="IMC 4K3",
     font=ips_radio_font,
-    bg='#9B233C',
-    fg='white',
-    selectcolor='#9B233C',
-    activeforeground='white',
-    activebackground='#9B233C',
+    bg="#9B233C",
+    fg="white",
+    selectcolor="#9B233C",
+    activeforeground="white",
+    activebackground="#9B233C",
     indicatoron=0,
     borderwidth=4,
     highlightthickness=0,
-    relief="flat"
+    relief="flat",
 )
 ips_radio_3 = tk.Radiobutton(
     ips_radio_frame,
@@ -264,15 +358,15 @@ ips_radio_3 = tk.Radiobutton(
     variable=ips_choice,
     value="Manually",
     font=ips_radio_font,
-    bg='#9B233C',
-    fg='white',
-    selectcolor='#9B233C',
-    activeforeground='white',
-    activebackground='#9B233C',
+    bg="#9B233C",
+    fg="white",
+    selectcolor="#9B233C",
+    activeforeground="white",
+    activebackground="#9B233C",
     indicatoron=0,
     borderwidth=4,
     highlightthickness=0,
-    relief="flat"
+    relief="flat",
 )
 ips_radio_1.pack(side="left", padx=10)
 ips_radio_2.pack(side="left", padx=20)
@@ -284,35 +378,37 @@ merge_button = Button(
     command=merge_button_clicked,
     font="Archivo",
     width=50,
-    bg='#9B233C',
-    fg='white',
-    activeforeground='white',
-    activebackground='#9B233C',
+    bg="#9B233C",
+    fg="white",
+    activeforeground="white",
+    activebackground="#9B233C",
     borderwidth=4,
     highlightthickness=0,
 )
 merge_button.pack(pady=25)
 
-link = Button(root, text="GitHub Repository", command=callback, bg='#9B233C', fg='white', font="Archivo")
+link = Button(
+    root,
+    text="GitHub Repository",
+    command=open_github_repository,
+    bg="#9B233C",
+    fg="white",
+    font="Archivo",
+)
 link.pack(padx=10, pady=10)
 
-def show_about_window():
-    about_window = tk.Toplevel(root)
-    about_window.title("About")
-    about_window.resizable(width=False, height=False)
-    about_window.geometry("250x150")
-
-    about_label = tk.Label(
-        about_window, text=f"Author: Hadzic Nikola\nVersion: 3.8\nClient: Petitat Manuel"
-    )
-    about_label.pack()
-
-
-about_button = tk.Button(root, text="About", command=show_about_window, bg='#9B233C', fg='white', font="Archivo")
+about_button = tk.Button(
+    root,
+    text="About",
+    command=show_about_window,
+    bg="#9B233C",
+    fg="white",
+    font="Archivo",
+)
 about_button.pack(side="bottom", anchor="se", pady=0)
 about_button.place(x=590, y=845)
 
-result_label = tk.Label(root, text="", bg='#9B233C', fg='white')
+result_label = tk.Label(root, text="", bg="#9B233C", fg="white")
 result_label.pack()
 
 ips_choice.trace("w", auto_fill_filename)
@@ -320,5 +416,8 @@ dropdownlist.bind("<<ComboboxSelected>>", auto_fill_filename)
 
 root.bind("<Control-,>", merge_button_clicked)
 root.bind("<Escape>", close_window)
+
+root.drop_target_register(DND_FILES)
+root.dnd_bind('<<Drop>>', on_drop)
 
 root.mainloop()
