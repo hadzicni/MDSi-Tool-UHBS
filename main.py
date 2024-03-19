@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 from datetime import datetime
 from PIL import Image, ImageTk
-import subprocess
 import webbrowser
 
 Button = tk.Button
@@ -15,9 +14,11 @@ root.geometry("660x900")
 app_font = ("Archivo", 16)
 root.configure(bg="#9B233C")
 
+
 def close_window(_event):
     root.destroy()
     exit()
+
 
 def on_drop(event):
     # Extrahiere den Pfad der abgelegten Datei/Ordner
@@ -31,6 +32,7 @@ def on_drop(event):
         elif os.path.isfile(dropped_path):
             # Hier kannst du entscheiden, was passieren soll, wenn Dateien abgelegt werden
             print(f"File dropped: {dropped_path}")
+
 
 def merge_xml_files(folder_path, output_file, msi_choice):
     merged_data = []
@@ -47,7 +49,7 @@ def merge_xml_files(folder_path, output_file, msi_choice):
                 start_index = xml_data.find(start_tag)
                 end_index = xml_data.rfind(end_tag)
                 if start_index != -1 and end_index != -1:
-                    data_to_append = xml_data[start_index : end_index + len(end_tag)]
+                    data_to_append = xml_data[start_index: end_index + len(end_tag)]
                     merged_data.append(data_to_append.strip())
 
     current_time = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -114,7 +116,7 @@ def browse_button_clicked():
 def auto_fill_filename(*args):
     output_filename_entry.delete(0, tk.END)
     ips_choice_value = ips_choice.get()
-    selected_month = dropdownlist.get()
+    selected_month = dropdowns.get()
     if selected_month not in [
         "01",
         "02",
@@ -154,6 +156,7 @@ def get_username():
     except OSError:
         return "Unknown user"
 
+
 def show_about_window():
     about_window = tk.Toplevel(root)
     about_window.title("About")
@@ -170,7 +173,9 @@ def show_about_window():
 
     about_label = tk.Label(
         about_window,
-        text=f"Universitätsspital Basel\nAuthor: Hadzic Nikola\nVersion: 3.8\nClient: Petitat Manuel\n\n© 2024 Nikola Hadzic", font=("Archivo", 10)
+        text=f"Universitätsspital Basel\nAuthor: Hadzic Nikola\nVersion: 3.8\nClient: Petitat Manuel\n\n© 2024 Nikola "
+             f"Hadzic",
+        font=("Archivo", 10)
     )
     about_label.pack()
 
@@ -181,9 +186,9 @@ def show_about_window():
         font=("Archivo", 10)
     )
     contact_button.pack(padx=5, pady=10)
-    
 
-dropdownlist = ttk.Combobox(
+
+dropdowns = ttk.Combobox(
     root,
     state="readonly",
     values=[
@@ -203,9 +208,9 @@ dropdownlist = ttk.Combobox(
     ],
     width=20,
 )
-dropdownlist.set("Please select month")
-dropdownlist.pack()
-dropdownlist.place(x=260, y=520)
+dropdowns.set("Please select month")
+dropdowns.pack()
+dropdowns.place(x=260, y=520)
 
 logo = None
 logo_path = "uhbs_logo_65_neg.png"
@@ -404,7 +409,7 @@ result_label = tk.Label(root, text="", bg="#9B233C", fg="white")
 result_label.pack()
 
 ips_choice.trace("w", auto_fill_filename)
-dropdownlist.bind("<<ComboboxSelected>>", auto_fill_filename)
+dropdowns.bind("<<ComboboxSelected>>", auto_fill_filename)
 
 root.bind("<Control-,>", merge_button_clicked)
 root.bind("<Escape>", close_window)

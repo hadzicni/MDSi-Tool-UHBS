@@ -18,6 +18,7 @@ The MDSi XML Utility is a Python program that allows you to merge multiple XML f
 •	Easily select source and target directories for merging.
 •	User-friendly GUI for ease of use.
 
+
 ## Usage
 1.	Select the folder containing the XML files you want to merge by clicking the "Auswählen" button next to "Ordner mit den XML-Dateien."
 2.	Choose the output folder by clicking the "Auswählen" button next to "Zielverzeichnis."
