@@ -2,7 +2,6 @@
 <img src="usblogo.png" width="400" height="86">
 </p>
 <p align="center">
-  <img src="http://some_place.com/image.png" />
 <img src="app_screenshot.jpg" width="400" height="570">
 </p>
 
