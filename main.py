@@ -1,6 +1,5 @@
 import os
 import tkinter as tk
-from tkinterdnd2 import DND_FILES, TkinterDnD
 from tkinter import ttk, filedialog
 from datetime import datetime
 from PIL import Image, ImageTk
@@ -9,7 +8,7 @@ import webbrowser
 
 Button = tk.Button
 
-root = TkinterDnD.Tk()
+root = tk.Tk()
 root.title("MDSi XML Utility")
 root.resizable(width=False, height=False)
 root.geometry("660x900")
@@ -416,8 +415,5 @@ dropdownlist.bind("<<ComboboxSelected>>", auto_fill_filename)
 
 root.bind("<Control-,>", merge_button_clicked)
 root.bind("<Escape>", close_window)
-
-root.drop_target_register(DND_FILES)
-root.dnd_bind('<<Drop>>', on_drop)
 
 root.mainloop()
