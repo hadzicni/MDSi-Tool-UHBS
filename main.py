@@ -101,13 +101,6 @@ def merge_button_clicked():
         merged_data = merge_xml_files(folder_path, output_file, ips_choice.get())
         result_label.config(text=f"XML files were merged and saved as {output_file}.")
 
-        if os.name == "nt":
-            subprocess.Popen(["explorer", output_folder])
-        elif os.name == "posix":
-            subprocess.Popen(["open", output_folder])
-        else:
-            pass
-
         merged_data = merge_xml_files(folder_path, output_file, ips_choice.get())
         root.after(3000, root.quit)
 
