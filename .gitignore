@@ -1,0 +1,26 @@
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+.idea/
+.vscode/
+.vscode-test/
+.vscode-test-remote/
+.vscode-test-remote-extensions/
+.vscode-test-remote-extensions-logs/
+.vscode-test-remote-extensions-test/
+.vscode-test-remote-extensions-test-logs/
+.vscode-test-remote-extensions-test-logs-remote/
+.vscode-test-remote-extensions-test-remote/
+.vscode-test-remote-extensions-test-remote-logs/
+.vscode-test-remote-extensions-test-remote-logs-remote/
+.venv/
+venv/
