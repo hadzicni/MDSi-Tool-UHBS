@@ -20,20 +20,6 @@ def close_window(_event):
     exit()
 
 
-def on_drop(event):
-    # Extrahiere den Pfad der abgelegten Datei/Ordner
-    dropped_files = root.tk.splitlist(event.data)
-    if dropped_files:
-        dropped_path = dropped_files[0]
-        if os.path.isdir(dropped_path):
-            # Wenn ein Ordner abgelegt wurde, setze diesen als Quellpfad
-            folder_path_entry.delete(0, tk.END)
-            folder_path_entry.insert(0, dropped_path)
-        elif os.path.isfile(dropped_path):
-            # Hier kannst du entscheiden, was passieren soll, wenn Dateien abgelegt werden
-            print(f"File dropped: {dropped_path}")
-
-
 def merge_xml_files(folder_path, output_file, msi_choice):
     merged_data = []
 
