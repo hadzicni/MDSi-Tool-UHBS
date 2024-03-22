@@ -1,5 +1,5 @@
 <p align="center">
-<img src="usblogo.png" width="400" height="76">
+<img src="usblogo.png" width="400" height="80">
 </p>
 <p align="center">
 <img src="app_screenshot.jpg" width="400" height="570">
