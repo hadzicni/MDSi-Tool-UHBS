@@ -158,7 +158,7 @@ def show_about_window():
 
     about_label = tk.Label(
         about_window,
-        text=f"Universitätsspital Basel\nAuthor: Hadzic Nikola\nVersion: 3.8\nClient: Petitat Manuel\n\n© 2024 Nikola "
+        text=f"Universitätsspital Basel\nAuthor: Hadzic Nikola\n\n© 2024 Nikola "
              f"Hadzic",
         font=("Archivo", 10)
     )
