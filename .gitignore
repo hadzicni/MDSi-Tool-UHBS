@@ -10,15 +10,67 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
 .idea/
 .vscode/
-.vscode-test/
-.vscode-test-remote/
-.vscode-test-remote-extensions/
-.vscode-test-remote-extensions-logs/
-.vscode-test-remote-extensions-test/
-.vscode-test-remote-extensions-test-logs/
-.vscode-test-remote-extensions-test-logs-remote/
-.vscode-test-remote-extensions-test-remote/
-.vscode-test-remote-extensions-test-remote-logs/
-.vscode-test-remote-extensions-test-remote-logs-remote/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Build
+*.manifest
+*.exe
+*.dll
+!mdsi_utility.spec
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project specific
+*.log
+*.xml
+temp/
+output/
+!example/*.xml  # Keep example XML files
+
+# Local settings
+settings.json

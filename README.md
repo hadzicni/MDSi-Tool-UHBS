@@ -1,56 +1,116 @@
+# MDSi XML Utility - UHBS
+
 <p align="left">
-<img src="usblogo.png" width="200" height="40">
+<img src="assets/usblogo.png" width="200" height="40">
 </p>
 <p align="center">
-<img src="app_screenshot.jpg" width="400" height="570">
+<img src="assets/app_screenshot.jpg" width="400" height="570">
 </p>
 
-# MDSi XML Utility
-
-## Overview
-
-The MDSi XML Utility is a Python program that allows you to merge multiple XML files into a single XML file. It is particularly useful for combining XML data into a specified format with customizable options. This utility comes with a user-friendly graphical user interface (GUI) built using the Tkinter library, making it easy to use.
-
-## Features
-
-• Merge multiple XML files into a single XML file.
-• Customize the output format with options for IPS choice.
-• Automatic filename generation based on IPS choice.
-• Easily select source and target directories for merging.
-• User-friendly GUI for ease of use.
-
-## Usage
-
-1. Select the folder containing the XML files you want to merge by clicking the "Auswählen" button next to "Ordner mit den XML-Dateien."
-2. Choose the output folder by clicking the "Auswählen" button next to "Zielverzeichnis."
-3. Specify your IPS choice by selecting one of the radio buttons under "IPS-Auswahl." You can choose from "IPS 4K2," "IMC 4K3," or "Manuell."
-4. If you want to use the default filename based on your IPS choice, you can leave the "Dateiname" field as is. Alternatively, you can manually enter your desired filename.
-5. Click the "XML-Dateien zusammenführen" button to start the merging process.
-6. A confirmation message will be displayed, and the merged XML file will be saved in the selected output folder.
-7. If you are using Windows, the output folder will open in File Explorer automatically.
-8. Run the program by executing the following command:
-
-   ```bash
-   python main.py
-   ```
-
 ## About
+The MDSi XML Utility is a specialized tool developed for the University Hospital Basel (UHBS) to streamline the process of merging multiple XML files. This application features a user-friendly graphical interface and supports various IPS configurations, making it an essential tool for managing medical data systems integration.
 
-This tool was created by Nikola Hadzic. The current version is 3.8.
-For any questions or issues, please contact the author at nikola.hadzic@usb.ch.
+## Key Features
+- **XML File Merging**: Combine multiple XML files into a single structured file
+- **IPS Configuration Support**: 
+  - IPS 4K2
+  - IMC 4K3
+  - Manual configuration
+- **Smart Filename Generation**: Automatic naming based on IPS choice
+- **User-Friendly Interface**: Modern GUI with intuitive controls
+- **Directory Management**: Easy selection of source and target directories
+- **Preview Functionality**: View merged data before saving
 
-## System Requirements
+## Installation
 
-• Python 3.x
+### For Users
+1. Download the latest release from the [releases page](https://github.com/hadzicni/MDSi-Utility-UHBS/releases)
+2. Extract the ZIP file to your desired location
+3. Run `MDSi-XML-Utility.exe`
+4. Follow the in-app instructions to merge XML files
 
-• Tkinter (usually included with Python installations)
+### For Developers
+```bash
+# Clone repository
+git clone https://github.com/hadzicni/MDSi-Utility-UHBS.git
+cd MDSi-Utility-UHBS
 
-• PIL (Python Imaging Library)
+# Create and activate virtual environment
+python -m venv .venv
+.venv\Scripts\activate
 
-• An operating system with the ability to open the file explorer (for automatic folder opening)
+# Install dependencies
+pip install -r requirements.txt
 
-# License
+# Run application
+python main.py
+```
 
-This software is released under the MIT License.
+## Usage Guide
 
-### Note: This README is intended to provide an overview of the program and its usage. For detailed technical information, please refer to the source code or to the author.
+### Basic Operation
+1. Launch the application
+2. Select source folder containing XML files
+3. Choose output directory
+4. Select IPS configuration
+5. (Optional) Customize output filename
+6. Click "XML-Dateien zusammenführen" to merge files
+
+### IPS Configurations
+- **IPS 4K2**: Standard configuration for general use
+- **IMC 4K3**: Enhanced configuration for specialized cases
+- **Manual**: Custom configuration options
+
+### Output Format
+The merged XML file follows this structure:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<MDSi>
+    <Header>
+        <IPSID>4K2</IPSID>
+        <!-- Additional headers -->
+    </Header>
+    <!-- Merged content -->
+</MDSi>
+```
+
+## Development
+
+### Project Structure
+```
+MDSi-Utility-UHBS/
+├── main.py          # Main application logic
+├── requirements.txt # Project dependencies
+├── README.md       # Project documentation
+└── assets/         # Images and resources
+```
+
+### Building from Source
+```bash
+pip install pyinstaller
+pyinstaller mdsi_utility.spec
+```
+
+### Contributing
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## Documentation
+- [Changelog](CHANGELOG.md)
+- [Contributing Guide](CONTRIBUTING.md)
+
+## Support and Contact
+For technical support or bug reports:
+- **Developer**: Nikola Hadzic
+- **Email**: nikola.hadzic@usb.ch
+- **Issue Tracker**: [GitHub Issues](https://github.com/hadzicni/MDSi-Utility-UHBS/issues)
+
+## License
+This project is proprietary software developed for UHBS. All rights reserved.
+
+## Acknowledgments
+- University Hospital Basel (UHBS) IT Department
+- Medical Data Systems Integration Team
+- All contributors and testers
+
+---
+ 2025 University Hospital Basel (UHBS). Version 3.8

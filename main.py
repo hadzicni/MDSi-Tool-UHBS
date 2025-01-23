@@ -198,7 +198,7 @@ dropdowns.pack()
 dropdowns.place(x=260, y=520)
 
 logo = None
-logo_path = "uhbs_logo_65_neg.png"
+logo_path = "assets/uhbs_logo_65_neg.png"
 if os.path.exists(logo_path):
     logo = Image.open(logo_path)
     logo = logo.resize((350, 60))
